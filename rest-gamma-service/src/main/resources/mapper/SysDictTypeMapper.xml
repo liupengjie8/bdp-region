@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rexen.rest.mapper.SysDictTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.rexen.rest.model.entity.SysDictionaryType">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="description" property="description" />
+        <result column="parent_id" property="parentId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="extension" property="extension" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, description, parent_id, create_time, update_time, extension
+    </sql>
+
+    <sql id="Base_Column_Page">
+        t.id AS id,
+        t.code AS code,
+        t.description AS description,
+        t.create_time AS createTime,
+        t.extension AS extension
+    </sql>
+
+    <select id="findPage" resultType="com.rexen.rest.model.vo.SysDictTypeResponseVO">
+        SELECT
+            <include refid="Base_Column_Page"/>
+        FROM sys_dictionary_type t
+        <where>
+            1=1
+            <if test="description != null and description != ''">
+                AND t.description LIKE CONCAT('%', #{description}, '%') escape '/'
+            </if>
+            <if test="code !=null and code !=''">
+                AND t.code LIKE CONCAT('%', #{code}, '%') escape '/'
+            </if>
+        </where>
+
+    </select>
+</mapper>

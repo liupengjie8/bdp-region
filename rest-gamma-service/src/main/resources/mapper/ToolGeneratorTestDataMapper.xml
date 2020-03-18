@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rexen.rest.mapper.ToolGeneratorTestDataMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.rexen.rest.model.entity.ToolGeneratorTestData">
+        <result column="id" property="id" />
+        <result column="data" property="data" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="enable" property="enable" />
+        <result column="data_length" property="dataLength" />
+        <result column="data_max" property="dataMax" />
+        <result column="data_max_integer" property="dataMaxInteger" />
+        <result column="data_max_number" property="dataMaxNumber" />
+        <result column="data_max_bigint" property="dataMaxBigint" />
+        <result column="data_max_deimal" property="dataMaxDeimal" />
+        <result column="data_max_numberic" property="dataMaxNumberic" />
+        <result column="data_max_float" property="dataMaxFloat" />
+        <result column="data_max_bitv" property="dataMaxBitv" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, data, create_time, create_by, update_time, update_by, enable, data_length, data_max, data_max_integer, data_max_number, data_max_bigint, data_max_deimal, data_max_numberic, data_max_float, data_max_bitv
+    </sql>
+
+    
+    <select id="selectToolGeneratorTestDataListByPage" parameterType="com.rexen.rest.common.page.RestPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        tool_generator_test_data
+        <where>
+                        <if test="parameter.data != null and parameter.data != ''"> and data like concat('%', #{parameter.data}, '%')</if>
+                        <if test="parameter.createTime != null and parameter.createTime != ''"> and create_time = #{parameter.createTime}</if>
+                        <if test="parameter.updateTime != null and parameter.updateTime != ''"> and update_time = #{parameter.updateTime}</if>
+                        <if test="parameter.updateBy != null and parameter.updateBy != ''"> and update_by like concat('%', #{parameter.updateBy}, '%')</if>
+                        <if test="parameter.enable != null"> and enable = #{parameter.enable}</if>
+                        <if test="parameter.dataLength != null and parameter.dataLength != ''"> and data_length = #{parameter.dataLength}</if>
+                        <if test="parameter.dataMax != null"> and data_max = #{parameter.dataMax}</if>
+                        <if test="parameter.dataMaxInteger != null and parameter.dataMaxInteger != ''"> and data_max_integer = #{parameter.dataMaxInteger}</if>
+                        <if test="parameter.dataMaxNumber != null and parameter.dataMaxNumber != ''"> and data_max_number = #{parameter.dataMaxNumber}</if>
+                        <if test="parameter.dataMaxBigint != null and parameter.dataMaxBigint != ''"> and data_max_bigint = #{parameter.dataMaxBigint}</if>
+                        <if test="parameter.dataMaxDeimal != null and parameter.dataMaxDeimal != ''"> and data_max_deimal = #{parameter.dataMaxDeimal}</if>
+                        <if test="parameter.dataMaxNumberic != null and parameter.dataMaxNumberic != ''"> and data_max_numberic = #{parameter.dataMaxNumberic}</if>
+                        <if test="parameter.dataMaxFloat != null and parameter.dataMaxFloat != ''"> and data_max_float = #{parameter.dataMaxFloat}</if>
+                        <if test="parameter.dataMaxBitv != null and parameter.dataMaxBitv != ''"> and data_max_bitv = #{parameter.dataMaxBitv}</if>
+        </where>
+    </select>
+</mapper>

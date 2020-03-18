@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rexen.rest.mapper.SysLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.rexen.rest.model.entity.SysOperationLog">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="operation_time" property="operationTime" />
+        <result column="client_ip" property="clientIp" />
+        <result column="module" property="module" />
+        <result column="operation_type" property="operationType" />
+        <result column="user_name" property="userName" />
+        <result column="dp_id" property="dpId" />
+
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id, operation_time, client_ip, module, operation_type, user_name,dp_id
+    </sql>
+
+    <sql id="Base_Column_Page">
+        t.id AS "id",
+        t.user_id AS "userId",
+        t.operation_time AS "operationTime",
+        t.client_ip AS "clientIp",
+        t.`module` AS "module",
+        t.operation_type AS "operationType",
+        t.user_name AS "userName",
+        t.dp_id AS "dpId"
+    </sql>
+
+    <select id="findPage" resultType="com.rexen.rest.model.vo.SysLogResponseVO">
+        SELECT
+            <include refid="Base_Column_Page"/>
+        FROM sys_operation_log t
+        <where>
+            1=1
+            <if test="userName != null and userName != ''">
+                AND t.user_name LIKE CONCAT('%', #{userName}, '%') escape '/'
+            </if>
+            <if test="clientIp !=null and clientIp !=''">
+                AND t.client_ip LIKE CONCAT('%', #{clientIp}, '%') escape '/'
+            </if>
+            <if test="operationType !=null and operationType !=''">
+                AND t.operation_type LIKE CONCAT('%', #{operationType}, '%') escape '/'
+            </if>
+            <if test="module !=null and module !=''">
+                AND t.`module` LIKE CONCAT('%', #{module}, '%') escape '/'
+            </if>
+            <if test="userId !=null and userId !=''">
+                AND t.`user_id` = #{userId}
+            </if>
+            <if test="startDate != null and endDate != null and startDate != '' and endDate != ''">
+                AND LEFT(t.operation_time,10) BETWEEN LEFT(#{startDate},10) AND LEFT(#{endDate},10)
+            </if>
+            <if test="startDate != null and startDate != '' and endDate == null or  endDate == ''">
+                AND LEFT(t.operation_time,10) &gt;= LEFT(#{startDate},10)
+            </if>
+            <if test="endDate != null and endDate != '' and startDate == null or  startDate == ''">
+                AND LEFT(t.operation_time,10) &lt;= LEFT(#{endDate},10)
+            </if>
+        </where>
+
+    </select>
+</mapper>
