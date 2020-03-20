@@ -46,6 +46,7 @@ public class SysLocationController extends AbstractController {
     @RestFunction(module = "位置管理模块", operation = "分页查询列表")
     @RequestMapping(value = "/listByPage", method = RequestMethod.GET)
     public ResponseEntity<ServiceStatus> list(RestPage<SysLocation> page, SysLocation sysLocation) {
+        sysLocation.setEnable(1);
         page.setParameter(sysLocation);
         return renderSuccess(sysLocationService.selectSysLocationListByPage(page));
     }
