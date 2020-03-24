@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rexen.rest.mapper.SysBuildingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.rexen.rest.model.entity.SysBuilding">
+        <id column="id" property="id" />
+        <result column="hospital" property="hospital" />
+        <result column="building" property="building" />
+        <result column="storey" property="storey" />
+        <result column="enable" property="enable" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="extension" property="extension" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, hospital, building, storey, enable, create_time, update_time, extension
+    </sql>
+
+    
+    <select id="selectSysBuildingListByPage" parameterType="com.rexen.rest.common.page.RestPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        sys_building
+        <where>
+                        <if test="parameter.hospital != null and parameter.hospital != ''"> and hospital = #{parameter.hospital}</if>
+                        <if test="parameter.building != null and parameter.building != ''"> and building = #{parameter.building}</if>
+                        <if test="parameter.storey != null and parameter.storey != ''"> and storey = #{parameter.storey}</if>
+                        <if test="parameter.enable != null"> and enable = #{parameter.enable}</if>
+                        <if test="parameter.extension != null and parameter.extension != ''"> and extension like concat('%', #{parameter.extension}, '%')</if>
+        </where>
+    </select>
+    <select id="selectBuilding" parameterType="com.rexen.rest.common.page.RestPage" resultMap="BaseResultMap">
+        select
+        distinct building
+        from
+        sys_building
+    </select>
+    <select id="selectStoreyByBuilding" parameterType="com.rexen.rest.common.page.RestPage" resultMap="BaseResultMap">
+        select
+        distinct storey
+        from
+        sys_building
+        <where>
+            <if test="parameter.hospital != null and parameter.hospital != ''"> and hospital = #{parameter.hospital}</if>
+            <if test="parameter.building != null and parameter.building != ''"> and building = #{parameter.building}</if>
+            <if test="parameter.storey != null and parameter.storey != ''"> and storey = #{parameter.storey}</if>
+            <if test="parameter.enable != null"> and enable = #{parameter.enable}</if>
+            <if test="parameter.extension != null and parameter.extension != ''"> and extension like concat('%', #{parameter.extension}, '%')</if>
+        </where>
+    </select>
+</mapper>
