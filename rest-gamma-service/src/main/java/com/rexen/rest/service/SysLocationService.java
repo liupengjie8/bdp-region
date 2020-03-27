@@ -15,5 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysLocationService extends IService<SysLocation> {
 
-    RestPage<SysLocation> selectSysLocationListByPage(RestPage<SysLocation> page);
+    RestPage<SysLocation> selectSysLocationListByPage(RestPage<SysLocation> page,String deptId);
 }

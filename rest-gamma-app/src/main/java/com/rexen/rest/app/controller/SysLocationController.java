@@ -8,6 +8,7 @@ import com.rexen.rest.common.page.RestPage;
 import com.rexen.rest.model.entity.SysLocation;
 import com.rexen.rest.service.SysLocationService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,10 +46,13 @@ public class SysLocationController extends AbstractController {
     @ApiOperation(value = "位置管理分页查询列表")
     @RestFunction(module = "位置管理模块", operation = "分页查询列表")
     @RequestMapping(value = "/listByPage", method = RequestMethod.GET)
-    public ResponseEntity<ServiceStatus> list(RestPage<SysLocation> page, SysLocation sysLocation) {
+    public ResponseEntity<ServiceStatus> list(RestPage<SysLocation> page, SysLocation sysLocation,String deptId ) {
+        if (StringUtils.isEmpty(deptId)) {
+            deptId = "";
+        }
         sysLocation.setEnable(1);
         page.setParameter(sysLocation);
-        return renderSuccess(sysLocationService.selectSysLocationListByPage(page));
+        return renderSuccess(sysLocationService.selectSysLocationListByPage(page,deptId));
     }
 
     @ApiOperation(value = "位置管理详情")

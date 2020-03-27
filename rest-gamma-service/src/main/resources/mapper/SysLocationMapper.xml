@@ -39,4 +39,19 @@
                         <if test="parameter.extension != null and parameter.extension != ''"> and extension like concat('%', #{parameter.extension}, '%')</if>
         </where>
     </select>
+    <select id="selectSysLocationList"  resultType="com.rexen.rest.model.entity.SysLocation">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        sys_location
+        WHERE
+        1=1
+        and enable = 1
+        <if test="deptId != null" >
+            and dept_id in
+            <foreach collection="deptId" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+    </select>
 </mapper>
