@@ -3,6 +3,7 @@ package com.rexen.rest.service;
 import com.rexen.rest.model.entity.SysLocation;
 import com.rexen.rest.common.page.RestPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.rexen.rest.model.vo.SysLocationVO;
 
 /**
  * <p>
@@ -15,5 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysLocationService extends IService<SysLocation> {
 
-    RestPage<SysLocation> selectSysLocationListByPage(RestPage<SysLocation> page,String deptId);
+    RestPage<SysLocationVO> selectSysLocationListByPage(RestPage<SysLocationVO> page, String deptId);
 }

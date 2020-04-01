@@ -3,6 +3,7 @@ package com.rexen.rest.service.impl;
 import com.rexen.rest.model.entity.SysLocation;
 import com.rexen.rest.mapper.SysLocationMapper;
 import com.rexen.rest.model.unit.DepartmentTreeNode;
+import com.rexen.rest.model.vo.SysLocationVO;
 import com.rexen.rest.service.SysDepartmentService;
 import com.rexen.rest.service.SysLocationService;
 import com.rexen.rest.common.page.RestPage;
@@ -29,7 +30,7 @@ public class SysLocationServiceImpl extends ServiceImpl<SysLocationMapper, SysLo
     private SysDepartmentService sysDepartmentService;
 
     @Override
-    public RestPage selectSysLocationListByPage(RestPage<SysLocation> page, String deptId) {
+    public RestPage selectSysLocationListByPage(RestPage<SysLocationVO> page, String deptId) {
         if (!StringUtils.isEmpty(deptId)) {
             List<DepartmentTreeNode> departments = this.sysDepartmentService.getDepartmentTreeNodeList(deptId);
             List<String> ids = (List<String>)departments.stream().map(DepartmentTreeNode::getId).collect(Collectors.toList());

@@ -6,6 +6,7 @@ import com.rexen.rest.model.entity.SysLocation;
 import com.rexen.rest.common.page.RestPage;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.rexen.rest.model.entity.SysUser;
+import com.rexen.rest.model.vo.SysLocationVO;
 import com.rexen.rest.model.vo.UserVO;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,6 +25,6 @@ public interface SysLocationMapper extends BaseMapper<SysLocation> {
 
     RestPage<SysLocation> selectSysLocationListByPage(RestPage<SysLocation> sysLocationRestPage);
 
-    RestPage<SysLocation> selectSysLocationList(Page<SysLocation> page,  @Param("deptId") List<String> deptId);
+    RestPage<SysLocationVO> selectSysLocationList(Page<SysLocation> page, @Param("deptId") List<String> deptId);
 
 }

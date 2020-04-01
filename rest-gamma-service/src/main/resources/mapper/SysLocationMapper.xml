@@ -3,7 +3,7 @@
 <mapper namespace="com.rexen.rest.mapper.SysLocationMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.rexen.rest.model.entity.SysLocation">
+    <resultMap id="BaseResultMap" type="com.rexen.rest.model.vo.SysLocationVO">
         <id column="id" property="id" />
         <result column="dept_id" property="deptId" />
         <result column="location_name" property="locationName" />
@@ -15,6 +15,7 @@
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
         <result column="extension" property="extension" />
+        <result column="is_dept_unique" property="isDeptUnique" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -39,11 +40,12 @@
                         <if test="parameter.extension != null and parameter.extension != ''"> and extension like concat('%', #{parameter.extension}, '%')</if>
         </where>
     </select>
-    <select id="selectSysLocationList"  resultType="com.rexen.rest.model.entity.SysLocation">
-        SELECT
-        <include refid="Base_Column_List"/>
+    <select id="selectSysLocationList"  resultType="com.rexen.rest.model.vo.SysLocationVO">
+        select
+        id, dept_id, location_name, building, storey, person_in_charge, area_scope, ENABLE, create_time, update_time, extension,
+        CASE WHEN (SELECT COUNT(1) FROM sys_location s WHERE s.dept_id = t.dept_id and s.enable=1)>1 THEN 1 ELSE 0 END is_dept_unique
         FROM
-        sys_location
+        sys_location t
         WHERE
         1=1
         and enable = 1

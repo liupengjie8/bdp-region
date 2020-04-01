@@ -6,6 +6,7 @@ import com.rexen.rest.app.controller.AbstractController;
 import com.rexen.rest.common.constant.GlobalConstant;
 import com.rexen.rest.common.page.RestPage;
 import com.rexen.rest.model.entity.SysLocation;
+import com.rexen.rest.model.vo.SysLocationVO;
 import com.rexen.rest.service.SysLocationService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
@@ -46,7 +47,7 @@ public class SysLocationController extends AbstractController {
     @ApiOperation(value = "位置管理分页查询列表")
     @RestFunction(module = "位置管理模块", operation = "分页查询列表")
     @RequestMapping(value = "/listByPage", method = RequestMethod.GET)
-    public ResponseEntity<ServiceStatus> list(RestPage<SysLocation> page, SysLocation sysLocation,String deptId ) {
+    public ResponseEntity<ServiceStatus> list(RestPage<SysLocationVO> page, SysLocationVO sysLocation, String deptId ) {
         if (StringUtils.isEmpty(deptId)) {
             deptId = "";
         }
